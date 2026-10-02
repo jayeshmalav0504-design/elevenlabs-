@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CricVoice Studio AI — Cricket Legends & ElevenLabs Text-to-Speech</title>
+  <meta name="description" content="Generate lifelike speech using ElevenLabs AI with exclusive voice profiles and commentary styles for Virat Kohli, Rohit Sharma, and Ravi Shastri.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏏</text></svg>">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Header / Navigation Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg class="brand-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="12" fill="url(#brand-grad)" />
+            <path d="M12 28V12L28 20L12 28Z" fill="#0B0F17" />
+            <circle cx="28" cy="14" r="3" fill="#00FFC2" />
+            <path d="M18 20L25 20" stroke="#0B0F17" stroke-width="2" stroke-linecap="round" />
+            <defs>
+              <linearGradient id="brand-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#00E5FF" />
+                <stop offset="0.5" stop-color="#3B82F6" />
+                <stop offset="1" stop-color="#F59E0B" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">CricVoice <span>Studio</span></h1>
+          <p class="brand-tagline">ElevenLabs AI Speech • Cricket Legends Edition</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Live API Key & Quota Badge -->
+        <div class="quota-pill" id="quota-pill" title="Live ElevenLabs Account Status">
+          <span class="status-dot connected"></span>
+          <span class="quota-text" id="quota-display">Checking Quota...</span>
+        </div>
+
+        <button class="btn btn-secondary btn-sm" id="btn-settings-toggle" title="Configure ElevenLabs API Key">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
+          </svg>
+          API Settings
+        </button>
+
+        <button class="btn btn-primary btn-sm" id="btn-guide-toggle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+          Clone Legends Guide
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-layout">
+    <!-- HERO SECTION: Cricket Legends Voice Selector -->
+    <section class="section-legend-picker">
+      <div class="section-header">
+        <div class="section-tag">
+          <span class="fire-icon">🔥</span>
+          RECOMMENDED CRICKET VOICES & STYLES
+        </div>
+        <h2 class="section-heading">Select a Voice Persona</h2>
+        <p class="section-subtext">Engineered for authentic Indian cricket commentary, intense dressing-room speeches, and witty press conferences.</p>
+      </div>
+
+      <!-- Legends Cards Grid -->
+      <div class="legends-grid" id="legends-grid">
+        <!-- Virat Kohli Card -->
+        <div class="legend-card active" data-persona="virat" id="card-virat">
+          <div class="legend-glow"></div>
+          <div class="card-badge">INTENSE & AGGRESSIVE • #18</div>
+          <div class="legend-avatar-wrapper">
+            <div class="legend-avatar avatar-virat">
+              <svg viewBox="0 0 80 80" class="avatar-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="38" fill="url(#virat-avatar-bg)" stroke="#EF4444" stroke-width="2" />
+                <path d="M40 20C34.5 20 30 24.5 30 30C30 35.5 34.5 40 40 40C45.5 40 50 35.5 50 30C50 24.5 45.5 20 40 20Z" fill="#F87171"/>
+                <path d="M22 62C22 50 30 46 40 46C50 46 58 50 58 62" fill="#DC2626"/>
+                <text x="40" y="58" font-size="10" font-family="'Outfit', sans-serif" font-weight="900" fill="#FFFFFF" text-anchor="middle">18</text>
+                <circle cx="56" cy="24" r="7" fill="#F59E0B" />
+                <text x="56" y="27" font-size="9" font-family="'Outfit', sans-serif" font-weight="900" fill="#000" text-anchor="middle">👑</text>
+                <defs>
+                  <linearGradient id="virat-avatar-bg" x1="0" y1="0" x2="80" y2="80">
+                    <stop stop-color="#450A0A" />
+                    <stop offset="1" stop-color="#1E1B4B" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="live-pulse-dot" title="Active selection"></div>
+          </div>
+
+          <div class="legend-info">
+            <h3 class="legend-name">Virat Kohli</h3>
+            <span class="legend-role">The King • Aggressive & Passionate</span>
+            <p class="legend-desc">High-voltage energy, laser-focused conviction, Delhi cadence. Perfect for motivational speeches, match finishes & roaring celebrations.</p>
+          </div>
+
+          <div class="legend-meta">
+            <div class="meta-item">
+              <span class="meta-label">Energy</span>
+              <span class="meta-value text-red">100% Fierce</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Dialect</span>
+              <span class="meta-value">Delhi / Indian Eng</span>
+            </div>
+          </div>
+
+          <div class="legend-quotes-trigger">
+            <button class="btn-quote-sample" data-quote="virat-1">"Bhaisahab, confidence chahiye bus. When you step on the field, play for the country with 200% heart!"</button>
+          </div>
+        </div>
+
+        <!-- Rohit Sharma Card -->
+        <div class="legend-card" data-persona="rohit" id="card-rohit">
+          <div class="legend-glow"></div>
+          <div class="card-badge">WITTY & CHILL • #45</div>
+          <div class="legend-avatar-wrapper">
+            <div class="legend-avatar avatar-rohit">
+              <svg viewBox="0 0 80 80" class="avatar-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="38" fill="url(#rohit-avatar-bg)" stroke="#3B82F6" stroke-width="2" />
+                <path d="M40 20C34.5 20 30 24.5 30 30C30 35.5 34.5 40 40 40C45.5 40 50 35.5 50 30C50 24.5 45.5 20 40 20Z" fill="#60A5FA"/>
+                <path d="M22 62C22 50 30 46 40 46C50 46 58 50 58 62" fill="#2563EB"/>
+                <text x="40" y="58" font-size="10" font-family="'Outfit', sans-serif" font-weight="900" fill="#FFFFFF" text-anchor="middle">45</text>
+                <circle cx="56" cy="24" r="7" fill="#60A5FA" />
+                <text x="56" y="27" font-size="9" font-family="'Outfit', sans-serif" font-weight="900" fill="#000" text-anchor="middle">🧢</text>
+                <defs>
+                  <linearGradient id="rohit-avatar-bg" x1="0" y1="0" x2="80" y2="80">
+                    <stop stop-color="#0F172A" />
+                    <stop offset="1" stop-color="#1E3A8A" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="live-pulse-dot"></div>
+          </div>
+
+          <div class="legend-info">
+            <h3 class="legend-name">Rohit Sharma</h3>
+            <span class="legend-role">Hitman • Calm, Witty & Relaxed</span>
+            <p class="legend-desc">Effortless Mumbai swagger, unhurried conversational cadence, subtle dry humor. Perfect for captain press conferences & casual banter.</p>
+          </div>
+
+          <div class="legend-meta">
+            <div class="meta-item">
+              <span class="meta-label">Energy</span>
+              <span class="meta-value text-blue">Cool & Composed</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Dialect</span>
+              <span class="meta-value">Mumbai Casual</span>
+            </div>
+          </div>
+
+          <div class="legend-quotes-trigger">
+            <button class="btn-quote-sample" data-quote="rohit-1">"Dekho simple baat hai, koi garden me ghumne nahi aaya hai! Focus on the match, execution pe dhyan do."</button>
+          </div>
+        </div>
+
+        <!-- Ravi Shastri Card -->
+        <div class="legend-card" data-persona="ravi" id="card-ravi">
+          <div class="legend-glow"></div>
+          <div class="card-badge">LEGENDARY COMMENTATOR • 🎙️</div>
+          <div class="legend-avatar-wrapper">
+            <div class="legend-avatar avatar-ravi">
+              <svg viewBox="0 0 80 80" class="avatar-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="38" fill="url(#ravi-avatar-bg)" stroke="#F59E0B" stroke-width="2" />
+                <path d="M40 20C34.5 20 30 24.5 30 30C30 35.5 34.5 40 40 40C45.5 40 50 35.5 50 30C50 24.5 45.5 20 40 20Z" fill="#FBBF24"/>
+                <path d="M22 62C22 50 30 46 40 46C50 46 58 50 58 62" fill="#D97706"/>
+                <rect x="34" y="47" width="12" height="15" rx="3" fill="#111827" />
+                <circle cx="56" cy="24" r="7" fill="#F59E0B" />
+                <text x="56" y="27" font-size="9" font-family="'Outfit', sans-serif" font-weight="900" fill="#000" text-anchor="middle">🎙️</text>
+                <defs>
+                  <linearGradient id="ravi-avatar-bg" x1="0" y1="0" x2="80" y2="80">
+                    <stop stop-color="#451A03" />
+                    <stop offset="1" stop-color="#18181B" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="live-pulse-dot"></div>
+          </div>
+
+          <div class="legend-info">
+            <h3 class="legend-name">Ravi Shastri</h3>
+            <span class="legend-role">The Voice • Booming Baritone</span>
+            <p class="legend-desc">Electrifying stadium commentary, dramatic pauses, deep resonant baritone. The iconic voice behind India's greatest World Cup triumphs.</p>
+          </div>
+
+          <div class="legend-meta">
+            <div class="meta-item">
+              <span class="meta-label">Energy</span>
+              <span class="meta-value text-amber">Electrifying Baritone</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Iconic Tag</span>
+              <span class="meta-value">"Tracer Bullet!"</span>
+            </div>
+          </div>
+
+          <div class="legend-quotes-trigger">
+            <button class="btn-quote-sample" data-quote="ravi-1">"It's high, it's handsome, and it's into the crowd! What an unbelievable strike! That went like a tracer bullet!"</button>
+          </div>
+        </div>
+
+        <!-- Custom / All ElevenLabs Voices Card -->
+        <div class="legend-card" data-persona="custom" id="card-custom">
+          <div class="legend-glow"></div>
+          <div class="card-badge">EXPLORE ALL VOICES • 🌐</div>
+          <div class="legend-avatar-wrapper">
+            <div class="legend-avatar avatar-custom">
+              <svg viewBox="0 0 80 80" class="avatar-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="38" fill="url(#custom-avatar-bg)" stroke="#10B981" stroke-width="2" />
+                <circle cx="40" cy="40" r="18" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" />
+                <circle cx="40" cy="40" r="8" fill="#10B981" />
+                <text x="56" y="27" font-size="9" font-family="'Outfit', sans-serif" font-weight="900" fill="#000" text-anchor="middle">✨</text>
+                <defs>
+                  <linearGradient id="custom-avatar-bg" x1="0" y1="0" x2="80" y2="80">
+                    <stop stop-color="#064E3B" />
+                    <stop offset="1" stop-color="#0F172A" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="live-pulse-dot"></div>
+          </div>
+
+          <div class="legend-info">
+            <h3 class="legend-name">All Account Voices</h3>
+            <span class="legend-role">ElevenLabs Library & Clones</span>
+            <p class="legend-desc">Access every voice in your ElevenLabs account, including your personal VoiceLab clones, premade library, and custom community voices.</p>
+          </div>
+
+          <div class="legend-meta">
+            <div class="meta-item">
+              <span class="meta-label">Account Voices</span>
+              <span class="meta-value text-emerald" id="voice-count-badge">Loading...</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Voice Cloning</span>
+              <span class="meta-value">Supported</span>
+            </div>
+          </div>
+
+          <div class="legend-quotes-trigger">
+            <button class="btn-quote-sample" data-quote="custom-1">"Welcome to the next generation of voice AI. Craft authentic speech with crystal-clear emotion."</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDIO WORKSPACE: Text Input & Controls + Player -->
+    <div class="studio-grid">
+      <!-- Left Column: Text Input & Script Crafting -->
+      <section class="card studio-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon-pill">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="card-title">Studio Speech Script</h2>
+              <p class="card-subtitle">Type or pick a cricket template for <span id="current-persona-label" class="highlight-text">Virat Kohli</span></p>
+            </div>
+          </div>
+
+          <!-- Quick Script Presets Dropdown/Pills -->
+          <div class="presets-dropdown-wrapper">
+            <button class="btn btn-ghost btn-xs" id="btn-quick-templates">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+              </svg>
+              Quick Presets
+            </button>
+            <div class="dropdown-menu" id="templates-menu">
+              <div class="menu-heading">MATCH MOMENTS</div>
+              <button class="menu-item" data-template="virat_chase">🔥 Virat's T20 World Cup Chase Speech</button>
+              <button class="menu-item" data-template="rohit_press">🧢 Rohit's Press Conference on Team Spirit</button>
+              <button class="menu-item" data-template="ravi_six_sixes">🎙️ Ravi Shastri Six Sixes in an Over</button>
+              <button class="menu-item" data-template="ravi_dhoni_finish">🏆 Dhoni Finishes Off in Style! (2011 WC)</button>
+              <div class="menu-heading">HINDI COMMENTARY & BANTER</div>
+              <button class="menu-item" data-template="virat_hindi">🇮🇳 Virat Aggressive Hindi Match Point</button>
+              <button class="menu-item" data-template="rohit_garden">😂 Rohit's Famous "Garden Me Ghumna" line</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Textarea with char counter -->
+          <div class="textarea-container">
+            <textarea 
+              id="tts-text" 
+              class="script-textarea" 
+              rows="6" 
+              placeholder="Enter your commentary or dialogue script here... Or click any prompt button above!"
+              maxlength="5000"
+            >When you are in the middle of a high-pressure chase against Pakistan in Melbourne, with 90,000 people roaring, you don't think about the noise. You back your preparation, watch the ball like a hawk, and say to yourself: I am finishing this game for my country!</textarea>
+            
+            <div class="textarea-footer">
+              <div class="char-count">
+                <span id="current-chars">260</span> / 5,000 characters
+                <span class="est-duration" id="est-duration">• ~18s audio</span>
+              </div>
+              <button class="btn-clear-text" id="btn-clear-text" title="Clear text">Clear</button>
+            </div>
+          </div>
+
+          <!-- Voice Mapping & Fine Tuning Controls Accordion -->
+          <div class="advanced-controls-panel">
+            <div class="panel-section-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6" />
+              </svg>
+              <span>Voice Fine-Tuning & Model Engine</span>
+              <span class="preset-tag" id="current-preset-badge">Aggressive Speech Preset</span>
+            </div>
+
+            <div class="controls-grid">
+              <!-- Voice Selection Dropdown -->
+              <div class="control-group">
+                <label for="voice-select" class="control-label">
+                  Mapped ElevenLabs Voice
+                  <span class="help-tooltip" title="Select which ElevenLabs voice ID to generate audio with. You can pick pre-made voices or your cloned celebrity voices!">ℹ️</span>
+                </label>
+                <div class="select-wrapper">
+                  <select id="voice-select" class="form-select">
+                    <option value="" disabled>Loading voices from ElevenLabs...</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- ElevenLabs Model Selection -->
+              <div class="control-group">
+                <label for="model-select" class="control-label">
+                  AI Speech Model
+                  <span class="help-tooltip" title="Multilingual v2 has the best emotional range and Indian accent handling!">ℹ️</span>
+                </label>
+                <div class="select-wrapper">
+                  <select id="model-select" class="form-select">
+                    <option value="eleven_multilingual_v2" selected>Eleven Multilingual v2 (Best for Accents & Hindi)</option>
+                    <option value="eleven_turbo_v2_5">Eleven Turbo v2.5 (Fastest & Expressive)</option>
+                    <option value="eleven_monolingual_v1">Eleven English v1 (Legacy English)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Stability Slider -->
+              <div class="control-group">
+                <div class="slider-header">
+                  <label for="stability-slider" class="control-label">Stability</label>
+                  <span class="slider-val" id="stability-val">0.38</span>
+                </div>
+                <input type="range" id="stability-slider" min="0" max="1" step="0.01" value="0.38" class="custom-range">
+                <div class="slider-hints">
+                  <span>Dynamic / Emotional</span>
+                  <span>Steady / Monotone</span>
+                </div>
+              </div>
+
+              <!-- Similarity / Clarity Slider -->
+              <div class="control-group">
+                <div class="slider-header">
+                  <label for="similarity-slider" class="control-label">Clarity & Similarity Boost</label>
+                  <span class="slider-val" id="similarity-val">0.85</span>
+                </div>
+                <input type="range" id="similarity-slider" min="0" max="1" step="0.01" value="0.85" class="custom-range">
+                <div class="slider-hints">
+                  <span>Low</span>
+                  <span>High Voice Fidelity</span>
+                </div>
+              </div>
+
+              <!-- Style Exaggeration -->
+              <div class="control-group">
+                <div class="slider-header">
+                  <label for="style-slider" class="control-label">Style Exaggeration</label>
+                  <span class="slider-val" id="style-val">0.45</span>
+                </div>
+                <input type="range" id="style-slider" min="0" max="1" step="0.01" value="0.45" class="custom-range">
+                <div class="slider-hints">
+                  <span>Subtle</span>
+                  <span>Dramatic / Intense</span>
+                </div>
+              </div>
+
+              <!-- Speaker Boost Toggle -->
+              <div class="control-group toggle-group">
+                <div class="toggle-info">
+                  <span class="control-label">Speaker Boost</span>
+                  <span class="toggle-desc">Enhances audio punch and vocal presence</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="speaker-boost" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Custom Voice ID Direct Slot -->
+            <div class="custom-voice-id-bar">
+              <label for="custom-voice-id" class="small-label">Custom Voice ID (Optional Override):</label>
+              <div class="input-with-button">
+                <input type="text" id="custom-voice-id" class="form-input-sm" placeholder="Paste custom cloned Voice ID (e.g. 21m00Tcm4TlvDq8ikWAM)">
+                <button class="btn btn-outline-xs" id="btn-apply-custom-id">Use ID</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Generate Action Button Bar -->
+          <div class="generate-bar">
+            <button class="btn btn-primary btn-generate" id="btn-generate">
+              <span class="btn-spinner" id="btn-spinner"></span>
+              <svg class="generate-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
+              </svg>
+              <span id="btn-generate-text">Generate Speech with ElevenLabs</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Audio Studio Player & Realtime Visualizer -->
+      <section class="card studio-card player-section">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon-pill icon-speaker">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M10 8l6 4-6 4V8z" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="card-title">Audio Studio Player</h2>
+              <p class="card-subtitle">Real-time spectrum visualizer & studio playback</p>
+            </div>
+          </div>
+          <span class="live-status-badge" id="player-status-badge">Ready</span>
+        </div>
+
+        <div class="card-body player-body">
+          <!-- Canvas Waveform & Spectrum Visualizer -->
+          <div class="visualizer-wrapper">
+            <canvas id="audio-visualizer" width="500" height="140"></canvas>
+            <div class="visualizer-overlay" id="visualizer-overlay">
+              <div class="waveform-glow"></div>
+              <span class="visualizer-hint" id="visualizer-hint">Hit "Generate Speech" to visualize live audio waves</span>
+            </div>
+          </div>
+
+          <!-- Current Playing Track Info -->
+          <div class="track-info-card">
+            <div class="track-avatar" id="current-track-avatar">
+              <span id="track-avatar-emoji">🏏</span>
+            </div>
+            <div class="track-details">
+              <div class="track-title" id="current-track-title">Cricket Legends Studio</div>
+              <div class="track-meta" id="current-track-meta">Generated with ElevenLabs AI</div>
+            </div>
+            <div class="track-time">
+              <span id="time-current">0:00</span> / <span id="time-total">0:00</span>
+            </div>
+          </div>
+
+          <!-- Custom Audio Progress Bar -->
+          <div class="scrub-container">
+            <input type="range" id="audio-scrubber" min="0" max="100" value="0" step="0.1" class="scrub-bar">
+          </div>
+
+          <!-- Master Audio Controls -->
+          <div class="audio-master-controls">
+            <!-- Left: Speed Selector -->
+            <div class="speed-controls">
+              <button class="btn-speed active" data-speed="1.0">1.0x</button>
+              <button class="btn-speed" data-speed="1.25">1.25x</button>
+              <button class="btn-speed" data-speed="1.5">1.5x</button>
+            </div>
+
+            <!-- Center: Play / Pause Button -->
+            <div class="main-transport-controls">
+              <button class="btn-transport" id="btn-skip-back" title="Rewind 5s">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 4v6h6M3.51 15a9 9 0 102.13-9.36L1 10" />
+                </svg>
+              </button>
+
+              <button class="btn-play-pause disabled" id="btn-play-pause" title="Play / Pause">
+                <svg id="icon-play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                <svg id="icon-pause" class="hidden" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="6" y="4" width="4" height="16" />
+                  <rect x="14" y="4" width="4" height="16" />
+                </svg>
+              </button>
+
+              <button class="btn-transport" id="btn-skip-forward" title="Forward 5s">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M23 4v6h-6M20.49 15a9 9 0 11-2.12-9.36L23 10" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Right: Download Button -->
+            <div class="download-controls">
+              <a id="btn-download-audio" class="btn btn-outline-sm disabled" download="CricVoice_Audio.mp3" title="Download Master MP3">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                Download MP3
+              </a>
+            </div>
+          </div>
+
+          <!-- Hidden Native Audio Element for Engine -->
+          <audio id="audio-player" preload="metadata"></audio>
+
+          <!-- History / Recent Generations List -->
+          <div class="history-panel">
+            <div class="history-header">
+              <span class="history-title">Recent Voice Takes</span>
+              <button class="btn-ghost-xs" id="btn-clear-history">Clear History</button>
+            </div>
+            <div class="history-list" id="history-list">
+              <div class="history-empty">No voice takes generated yet. Try generating your first cricket commentary take!</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- MODAL 1: ElevenLabs API Key Settings Modal -->
+  <div class="modal-backdrop" id="modal-api-settings">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">🔑</span>
+          <h3 class="modal-title">ElevenLabs API Settings</h3>
+        </div>
+        <button class="modal-close" id="modal-close-settings">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">
+          Your ElevenLabs API key connects this studio directly to the official neural voice synthesizer.
+        </p>
+
+        <div class="form-group">
+          <label for="api-key-input" class="modal-label">API Key (xi-api-key):</label>
+          <div class="input-with-button">
+            <input type="password" id="api-key-input" class="form-input" placeholder="sk_...">
+            <button class="btn btn-outline-sm" id="btn-toggle-key-visibility">Show</button>
+          </div>
+          <span class="form-help">Pre-configured with your provided API key. Saved securely in your browser's local storage.</span>
+        </div>
+
+        <div class="connection-status-box" id="settings-status-box">
+          <div class="status-indicator">
+            <span class="status-dot connected" id="settings-status-dot"></span>
+            <strong id="settings-status-label">Validating Connection...</strong>
+          </div>
+          <div class="user-tier-info" id="settings-user-tier">Checking your ElevenLabs tier...</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="modal-cancel-settings">Cancel</button>
+        <button class="btn btn-primary" id="btn-save-api-key">Save & Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: How to Clone Virat Kohli, Rohit Sharma & Ravi Shastri Guide -->
+  <div class="modal-backdrop" id="modal-clone-guide">
+    <div class="modal-dialog-large">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">🎙️</span>
+          <h3 class="modal-title">How to Clone Virat Kohli, Rohit Sharma & Ravi Shastri in ElevenLabs</h3>
+        </div>
+        <button class="modal-close" id="modal-close-guide">&times;</button>
+      </div>
+      <div class="modal-body modal-scrollable">
+        <div class="guide-banner">
+          <p>
+            ElevenLabs allows you to clone any distinct voice using their <strong>Instant Voice Cloning (VoiceLab)</strong> feature with just 1–2 minutes of clean audio!
+          </p>
+        </div>
+
+        <div class="guide-steps">
+          <div class="guide-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Get 1–2 Minutes of Clean Speech Sample</h4>
+              <p>Find a high-quality interview, post-match conference, or commentary clip without background music or stadium crowds:</p>
+              <ul class="step-list">
+                <li><strong>Virat Kohli:</strong> Post-match press conferences (e.g. ICC or IPL pressers), RCB podcast interviews.</li>
+                <li><strong>Rohit Sharma:</strong> Captain's press conferences (expresses his relaxed, humorous Mumbai tone).</li>
+                <li><strong>Ravi Shastri:</strong> Commentary highlights or podcast episodes (pure baritone voice).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Upload to ElevenLabs VoiceLab</h4>
+              <p>
+                Go to <a href="https://elevenlabs.io/app/voice-lab" target="_blank" class="external-link">elevenlabs.io/app/voice-lab</a> and click <strong>"Add Generative or Cloned Voice"</strong> → Choose <strong>"Instant Voice Cloning"</strong>.
+              </p>
+              <p>Upload your audio file, name it (e.g. <code>Virat Kohli Clone</code>), and click <strong>Create Voice</strong>.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Copy the Voice ID & Paste Here</h4>
+              <p>
+                In ElevenLabs VoiceLab, click on the three dots (<strong>...</strong>) next to your newly created voice and click <strong>"Copy Voice ID"</strong>.
+              </p>
+              <p>
+                Paste it into the <strong>"Custom Voice ID"</strong> field in CricVoice Studio, and it will immediately generate speech with your cloned voice!
+              </p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Built-in Matching Fallbacks</h4>
+              <p>
+                Don't have custom cloned voice files yet? No problem! CricVoice Studio comes pre-configured with the closest matched high-fidelity neural voices and fine-tuned stability, clarity, and style exaggeration parameters to deliver authentic pacing for all three legends immediately!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btn-close-guide-footer">Got It, Let's Create!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>

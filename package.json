@@ -1,0 +1,21 @@
+{
+  "name": "cricvoice-studio",
+  "version": "1.0.0",
+  "description": "ElevenLabs Text-to-Speech Web Studio with Cricket Legends (Virat Kohli, Rohit Sharma, Ravi Shastri)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "elevenlabs",
+    "text-to-speech",
+    "virat-kohli",
+    "rohit-sharma",
+    "ravi-shastri",
+    "audio-ai",
+    "cricket"
+  ],
+  "author": "CricVoice AI",
+  "license": "MIT"
+}
